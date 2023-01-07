@@ -1,5 +1,6 @@
 import PostMessage from "../models/postMessage.js";
 import express from 'express';
+import mongoose from "mongoose";
 
 const router = express.Router();
 export const getPosts = async (req, res) => {
@@ -25,4 +26,13 @@ export const createPost = async (req, res) => {
     }
 }
 
+export const updatePost = async(req, res) => {
+    const {id: _id} = req.params;
+    const post = req.body;
+
+    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send("No Post with this id")
+
+    const updatedPost = await PostMessage.findOneAndUpdate(_id, post, {new: true});
+    res.json(updatePost);
+}
 export default router;
