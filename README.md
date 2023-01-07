@@ -7,7 +7,7 @@ The Back-End server portion's file structure looked somewhat like this.
 
 ![image](https://user-images.githubusercontent.com/59326871/211008265-7c2d2d03-280f-4736-a40c-ed67af9beae9.png)
 
-I used the database at https://cloud.mongodb.com[https://cloud.mongodb.com/](https://cloud.mongodb.com/)  . Making sure your IP is registered in MongoDB is always a good idea.
+I used the database at [https://cloud.mongodb.com/](https://cloud.mongodb.com/)  . Making sure your IP is registered in MongoDB is always a good idea.
 
 I also learned how the Node API works. the controller code for the routes and the GET and POST requests.
 
