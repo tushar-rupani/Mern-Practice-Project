@@ -8,8 +8,11 @@ import moment from "moment";
 import ThumbUpAlt from '@material-ui/icons/ThumbUpAlt';
 import Delete from '@material-ui/icons/Delete';
 import Tags from '@material-ui/icons/TagFacesOutlined'
+import { dPost,lPost } from '../../../actions/posts';
+import {useDispatch} from 'react-redux';
 const Post = ({post, setCurrentId}) => {
 const classes = useStyles();
+const dispatch = useDispatch();
   return (
     <Card className={classes.card}>
       <CardMedia className={classes.media} image={post.selectedFile} title={post.title} />
@@ -24,17 +27,17 @@ const classes = useStyles();
       </div>
 
       <div className={classes.details}>
-        <Typography variant='body2' color="textSecondary" component="h2"><Tags fontSize='default'/>{post.tags.map((tag) => ` ${tag}`)}</Typography>
+        <Typography variant='body2' color="textSecondary" component="h2">{post.tags.map((tag) => ` #${tag}`)}</Typography>
       </div>
         <Typography variant='h5' component="h2" className={classes.title} gutterBottom>{post.title}</Typography>
         <CardContent>
           <Typography variant='body2' color='textSecondary' component="p">{post.message}</Typography>
         </CardContent>
         <CardActions className={classes.cardActions}>
-          <Button size='small' color="primary" onClick = {() => {}}>
-            <ThumbUpAlt fontSize='default'/> Liked
+          <Button size='small' color="primary" onClick = {() => dispatch(lPost(post._id))}>
+            <ThumbUpAlt fontSize='default'/> Liked {post.likeCount}
           </Button>
-          <Button size='small' color="primary" onClick = {() => {}}>
+          <Button size='small' color="primary" onClick = {() => dispatch(dPost(post._id))}>
             <Delete fontSize='default'/> Delete
           </Button>
         </CardActions>

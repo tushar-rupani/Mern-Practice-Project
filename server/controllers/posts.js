@@ -27,12 +27,31 @@ export const createPost = async (req, res) => {
 }
 
 export const updatePost = async(req, res) => {
-    const {id: _id} = req.params;
+    const {id} = req.params;
     const post = req.body;
 
-    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send("No Post with this id")
-
-    const updatedPost = await PostMessage.findOneAndUpdate(_id, post, {new: true});
-    res.json(updatePost);
+    if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send("No Post with this id")
+    const updatedPost = await PostMessage.findByIdAndUpdate({'_id' : id}, post, {new: true});
+    res.json(updatedPost);
 }
 export default router;
+
+export const deletePost = async(req, res) => {
+    const {id} = req.params;
+    if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send("No Post with this id");
+
+    await PostMessage.findByIdAndRemove(id);
+    res.json({message: "post deleted"})
+
+}
+
+export const likePost = async(req, res) => {
+
+    const {id} = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
+    const post = await PostMessage.findById(id);
+    const updatedPost = await PostMessage.findByIdAndUpdate(id, {likeCount: post.likeCount + 1}, {new: true});
+    console.log("WE liked");
+    res.json(updatePost);
+
+}
