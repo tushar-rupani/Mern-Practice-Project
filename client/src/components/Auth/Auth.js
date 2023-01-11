@@ -4,19 +4,29 @@ import useStyles from './style'
 import LockedIcon from '@material-ui/icons/LockOpenOutlined'
 import Input from './Input'
 import { GoogleLogin, googleLogout } from '@react-oauth/google'
+import { createOrGetUser } from '../../utils'
 const Auth = () => {
   const classes = useStyles();
   const [isSignUp, setIsSignUp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const initialStateOfForm = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: ""    
+  }
+  const [formData, setFormData] = useState(initialStateOfForm);
   const handleToggle = () => {
     alert("called")
     
   }
-  const handleSubmit = () => {
-
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
   }
-  const handleChange = () => {
-
+  const handleChange = (e) => {
+    setFormData({...formData, [e.target.name] : e.target.value})
   }
   const handleState = () => {
     setIsSignUp((prevState) => !prevState )
@@ -46,7 +56,7 @@ const Auth = () => {
             <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? "text" : "password"} handleShowPassword = {handleShowPassword} />
             {isSignUp && <Input name="confirmPassword" label="Confirm Password" handleChange={handleChange} type={showPassword ? "text" : "password"} handleShowPassword = {handleShowPassword} />} 
           </Grid>
-          <Button className={classes.submit} fullWidth variant="contained" color='primary' > 
+          <Button className={classes.submit} fullWidth variant="contained" color='primary' type="submit" > 
             {isSignUp ? "Sign Up" : "Sign In"}
           </Button>
           <Grid container justifyContent='flex-end'>
@@ -55,7 +65,7 @@ const Auth = () => {
             </Grid>
             <Grid item>
               <GoogleLogin
-                onSuccess={(res) => console.log(res)}
+                onSuccess={(res) => createOrGetUser(res)}
                 onError={() => console.log("Something went wrong")}
               />
             </Grid>
