@@ -20,3 +20,5 @@ Use of "useDispatch()" How react apps use action and reducers.
 A few YouTube channels and StackOverflow were quite helpful.
 
 The next objective is to learn database editing and deletion procedures.
+
+Source: JavaScript Mastery on YouTube.
